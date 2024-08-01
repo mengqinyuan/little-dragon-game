@@ -1,25 +1,24 @@
 import pygame
 import random
 import sys
-
-# 初始化Pygame
+import time
+# ./game.py
+# init Pygame
 pygame.init()
 
-# 假设的窗口宽度和高度，需要根据实际情况调整
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-
+DRAGON_MOVE_SPEED = 1
+DRAGON_HP = 1000 
 # dragon settings
 DRAGON_IMAGE_PATH = "./Resource/Dragon.jpg"
 DRAGON_INIT_X = 20
 DRAGON_INIT_Y = WINDOW_HEIGHT // 4
 DRAGON_JUMP_HEIGHT = 10
 DRAGON_JUMP_WIDTH = 20
-DRAGON_MOVE_SPEED = 1
-DRAGON_HP = 1000
 JUMP_DURATION = 10  # jump duration
 
 # TO DEVELOPERS: You can add more obstacle images here. Don't forget to add if-elif block in Obstacle.
@@ -170,7 +169,7 @@ def main():
 
     while running:
         screen.fill((255, 255, 255))
-
+        time.sleep(2)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -194,6 +193,7 @@ def main():
             print(e)
             running = False
             while running:
+                time.sleep(2)
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
