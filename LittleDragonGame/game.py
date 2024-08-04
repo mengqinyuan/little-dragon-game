@@ -95,7 +95,7 @@ class Dragon:
             pass
 
 class Obstacle:
-    images_cache = {}  # 用于缓存已加载的图像
+    images_cache = {}  # cache the loaded images
 
     def __init__(self, image_paths, init_y, dragon, window_width):
         self.y = init_y
@@ -105,9 +105,9 @@ class Obstacle:
             self.x_ls[0] -= diff // 2
             self.x_ls[1] += diff // 2
 
-        # 从缓存中获取图像，如果不在缓存中则加载并加入缓存
+        # get images from cache, if not in cache, add it.
         self.images = []
-        self.types = []  # 新增的列表，用于存储每个障碍物的类型
+        self.types = []  # new list for different types of obstacles
         for path in image_paths:
             self.images.append(self.load_image(path))
             if path == "./Resource/Fire.jpg":
@@ -118,11 +118,11 @@ class Obstacle:
                 self.types.append("ice")
 
         self.rects = [pygame.Rect(x, self.y, img.get_width(), img.get_height()) for x, img in zip(self.x_ls, self.images)]
-        self.move_speed = 3.5  # 设置障碍物的移动速度
+        self.move_speed = 3.5  # here is the move speed
 
     @classmethod
     def load_image(cls, path):
-        """加载图像并缓存"""
+    # make a new object cls
         if path not in cls.images_cache:
             cls.images_cache[path] = pygame.image.load(path).convert_alpha()
         return cls.images_cache[path]
@@ -135,7 +135,7 @@ class Obstacle:
         for i, rect in enumerate(self.rects):
             rect.x -= self.move_speed
             if rect.right < 0:
-                # 当障碍物移出屏幕左侧时，重新生成位置和图像
+                # if the obstacle move out of the screen, redraw it.
                 new_x = random.randint(dragon.getX(), window_width)
                 self.x_ls[i] = new_x
                 new_path = random.choice(OBSTACLE_IMAGE_LIST)
@@ -151,14 +151,15 @@ class Obstacle:
         return -1
 
     def get_obstacle_type(self, index) -> str:
-        # 根据索引返回障碍物类型
+        # return the type of the obstacle
         return self.types[index]
 
 
 class GameOverException(Exception):
+    # this class for processing the except message
     pass
 
-def main():
+def main(): # the main cycle
     global OBSTACLE_IMAGE_LIST
 
     little_dragon = Dragon(DRAGON_MOVE_SPEED, DRAGON_JUMP_HEIGHT, DRAGON_JUMP_WIDTH)
